@@ -2,6 +2,8 @@
 
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { useLanguage } from '../context/LanguageContext';
+import { useTranslations } from '../i18n';
 
 type Creature = {
   name: string;
@@ -20,6 +22,8 @@ type Props = {
 export default function CreatureCard({ group }: Props) {
   const [revealed, setRevealed] = useState(false);
   const isMouse = useRef(false);
+  const { lang } = useLanguage();
+  const tapHint = useTranslations(lang).creatureCard.tapHint;
 
   const handlePointerEnter = (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse') {
@@ -82,7 +86,7 @@ export default function CreatureCard({ group }: Props) {
       <div
         className={`touch-hint absolute bottom-0 left-0 right-0 flex justify-center pb-4 pointer-events-none transition-opacity duration-300 ${revealed ? 'opacity-0' : 'opacity-100'}`}
       >
-        <span className="text-luminous-blue-200/60 text-xs tracking-widest">タップして記録を見る</span>
+        <span className="text-luminous-blue-200/60 text-xs tracking-widest">{tapHint}</span>
       </div>
 
       {/* オーバーレイ：ホバー or タップで浮かび上がる */}

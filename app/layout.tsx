@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { LanguageProvider } from "./context/LanguageContext";
+import LanguageSwitcher from "./components/LanguageSwitcher";
+import LangAttributeSync from "./components/LangAttributeSync";
 
 export const metadata: Metadata = {
   title: "Litho-Arche: The Archive of Luminous Memories",
@@ -21,7 +24,13 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <LanguageProvider>
+          <LangAttributeSync />
+          <LanguageSwitcher />
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }

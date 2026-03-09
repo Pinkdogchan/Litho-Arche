@@ -1,6 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import type { Character } from '../lib/characters';
 import CreatureCard from './CreatureCard';
+import { useLanguage } from '../context/LanguageContext';
+import { useTranslations } from '../i18n';
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -21,6 +25,9 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 export default function CharacterProfile({ character, featuredVideo }: { character: Character; featuredVideo?: string }) {
+  const { lang } = useLanguage();
+  const cp = useTranslations(lang).characterProfile;
+
   return (
     <div className="space-y-8">
 
@@ -82,7 +89,7 @@ export default function CharacterProfile({ character, featuredVideo }: { charact
 
       {/* 観測記録 */}
       <section className="bg-deep-night-100/30 backdrop-blur-sm border border-luminous-blue-400/10 rounded-lg p-8 md:p-12">
-        <SectionTitle>観測記録</SectionTitle>
+        <SectionTitle>{cp.observationTitle}</SectionTitle>
         <div className="space-y-6">
           {character.profile.map((item, i) => (
             <div key={i} className="border-l-2 border-luminous-blue-500/30 pl-6">
@@ -97,7 +104,7 @@ export default function CharacterProfile({ character, featuredVideo }: { charact
           ))}
           {character.weakness && (
             <div className="border-l-2 border-luminous-blue-500/30 pl-6">
-              <p className="text-sm text-luminous-blue-300/80 mb-1 tracking-widest">規定外のログ</p>
+              <p className="text-sm text-luminous-blue-300/80 mb-1 tracking-widest">{cp.offLogLabel}</p>
               <p className="text-luminous-blue-100/90 leading-relaxed">{character.weakness}</p>
             </div>
           )}
@@ -107,7 +114,7 @@ export default function CharacterProfile({ character, featuredVideo }: { charact
       {/* 所持品・道具 */}
       {character.equipment && (
         <section className="bg-deep-night-100/30 backdrop-blur-sm border border-luminous-blue-400/10 rounded-lg p-8 md:p-12">
-          <SectionTitle>所持品・道具</SectionTitle>
+          <SectionTitle>{cp.equipmentTitle}</SectionTitle>
           {character.equipmentImage && (
             <div className="flex justify-center mb-8">
               <Image
@@ -134,7 +141,7 @@ export default function CharacterProfile({ character, featuredVideo }: { charact
       {/* 観測者の解剖図 */}
       {character.anatomyImages && character.anatomyImages.length > 0 && (
         <section className="bg-deep-night-100/30 backdrop-blur-sm border border-luminous-blue-400/10 rounded-lg p-8 md:p-12">
-          <SectionTitle>観測者の解剖図</SectionTitle>
+          <SectionTitle>{cp.anatomyTitle}</SectionTitle>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {character.anatomyImages.map((item, i) => (
               <CreatureCard

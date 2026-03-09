@@ -2,9 +2,13 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { useLanguage } from '../context/LanguageContext';
+import { useTranslations } from '../i18n';
 
 export default function CoverLink() {
   const [opened, setOpened] = useState(false);
+  const { lang } = useLanguage();
+  const t = useTranslations(lang).coverLink;
 
   const coverTransform = opened ? 'rotateY(-160deg)' : 'rotateY(-10deg)';
 
@@ -59,17 +63,15 @@ export default function CoverLink() {
                   />
                 </div>
                 <h2 style={{ fontFamily: "'Kaisei HarunoUmi', cursive", fontSize: '1rem', color: '#80c1ff', textAlign: 'center', margin: 0, marginTop: 'auto', flexShrink: 0, letterSpacing: '0.05em' }}>
-                  記録官ルーフェンからの伝言
+                  {t.heading}
                 </h2>
                 <div style={{ fontSize: '0.75rem', color: 'rgba(179, 217, 255, 0.9)', lineHeight: 1.75, fontFamily: "'Kalam', cursive", overflow: 'hidden' }}>
-                  <p style={{ margin: '0 0 4%' }}>深い霧の底、地殻の裂け目に沿って広がる世界へようこそ。</p>
-                  <p style={{ margin: '0 0 4%' }}>ここは、世界中の「まだ言葉にならない想い」や「忘れかけられた夢」を収集し、美しく分類・記録する図譜「Litho-Arche 博物誌」の観測所です。</p>
-                  <p style={{ margin: '0 0 4%', fontStyle: 'italic', fontFamily: "'Caveat', cursive", fontSize: '1.05em', color: 'rgba(179, 217, 255, 0.85)' }}>
-                    「記録されなければ、それは最初から無かったことになる。
-                    <br />
-                    だから僕は、消えゆく記憶を最後の一滴まで記録し続ける。」
+                  <p style={{ margin: '0 0 4%' }}>{t.message1}</p>
+                  <p style={{ margin: '0 0 4%' }}>{t.message2}</p>
+                  <p style={{ margin: '0 0 4%', fontStyle: 'italic', fontFamily: "'Caveat', cursive", fontSize: '1.05em', color: 'rgba(179, 217, 255, 0.85)', whiteSpace: 'pre-line' }}>
+                    {t.quote}
                   </p>
-                  <p style={{ margin: 0, textAlign: 'right', color: '#4da9ff' }}>— 主席記録官 ルーフェン</p>
+                  <p style={{ margin: 0, textAlign: 'right', color: '#4da9ff' }}>{t.quoteAuthor}</p>
                 </div>
               </div>
             </div>
@@ -154,7 +156,7 @@ export default function CoverLink() {
         className="group text-luminous-blue-300/50 text-sm mt-5 tracking-[0.3em] hover:text-luminous-blue-300/90 transition-colors duration-300 bg-transparent border-0 cursor-pointer"
         style={{ fontFamily: "'Caveat', cursive", display: 'block', width: '100%' }}
       >
-        {opened ? '── 閉じる ──' : '── 開く ──'}
+        {opened ? t.close : t.open}
       </button>
     </div>
   );
